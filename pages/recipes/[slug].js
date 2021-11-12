@@ -1,9 +1,9 @@
-import { useRouter } from "next/dist/client/router";
-import { useState } from "react";
+import { UseRouter } from "next/dist/client/router";
+import { UseState } from "react";
 import {
   sanityClient,
   urlFor,
-  usePreviewSubscription,
+  UsePreviewSubscription,
   PortableText,
 } from "../../lib/sanity";
 
@@ -28,16 +28,16 @@ const recipeQuery = `*[_type == "recipe" && slug.current == $slug][0]{
  
 export default function OneRecipe({ data, preview }) {
 
-  // const router = useRouter();
+  const router = UseRouter();
  
   if (!data) return <div>Loading...</div>;
-  const { data: recipe } = usePreviewSubscription(recipeQuery, {
+  const { data: recipe } = UsePreviewSubscription(recipeQuery, {
     params: { slug: data.recipe?.slug.current },
     initialData: data,
     enabled: preview,
   }
   );
-  const [likes, setLikes] = useState(data?.recipe?.likes);
+  const [likes, setLikes] = UseState(data?.recipe?.likes);
 
   const addLike = async () => {
     const res = await fetch("/api/handle-like", {
